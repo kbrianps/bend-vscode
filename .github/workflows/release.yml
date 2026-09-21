@@ -1,0 +1,39 @@
+# A v* tag builds, tests and packages the extension, then publishes the
+# .vsix as that tag's release. Run by hand, it does everything but publish.
+name: release
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - run: npm run package
+      - name: The tag names the version in package.json
+        if: github.ref_type == 'tag'
+        run: test "v$(node -p 'require("./package.json").version')" = "$GITHUB_REF_NAME"
+      - name: Notes
+        run: |
+          lsp=$(node -p 'require("./package-lock.json").packages["node_modules/bend2-lsp"].version')
+          echo "Bundles bend2-lsp $lsp." > notes.md
+          echo "" >> notes.md
+          echo "Install: \`code --install-extension bend-$(node -p 'require("./package.json").version').vsix\`" >> notes.md
+          cat notes.md
+      - name: Publish
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" *.vsix --title "$GITHUB_REF_NAME" --notes-file notes.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: "*.vsix"

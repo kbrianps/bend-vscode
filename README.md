@@ -53,6 +53,19 @@ npm test          # the grammar, and the bundled server over stdio
 npm run package   # bend-<version>.vsix
 ```
 
+## Releasing
+
+Dependabot opens a PR when bend2-lsp publishes a new version; merge it once
+CI is green. Then:
+
+```sh
+npm version patch   # bumps package.json, commits, tags vX.Y.Z
+git push --follow-tags
+```
+
+The tag builds the `.vsix` and publishes it as a release, with the bundled
+bend2-lsp version in its notes.
+
 ## Credits
 
 The language server is [bend2-lsp](https://github.com/don2e4/bend2-lsp) by

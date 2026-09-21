@@ -1,0 +1,14 @@
+# Watches bend2-lsp alone: a new release on npm opens a PR that bumps the
+# bundled server, and CI runs the extension's tests against it.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+    allow:
+      - dependency-name: bend2-lsp
+    commit-message:
+      prefix: deps
+    labels:
+      - bend2-lsp
