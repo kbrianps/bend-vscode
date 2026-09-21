@@ -37,7 +37,7 @@ jobs:
           lsp=$(node -p 'require("./package-lock.json").packages["node_modules/bend2-lsp"].version')
           echo "Bundles bend2-lsp $lsp." > notes.md
           echo "" >> notes.md
-          echo "Install: \`code --install-extension bend-$(node -p 'require("./package.json").version').vsix\`" >> notes.md
+          echo "Install: \`code --install-extension kbrianps.bend2\`, or this release's .vsix." >> notes.md
           cat notes.md
       - name: GitHub release
         if: github.ref_type == 'tag'

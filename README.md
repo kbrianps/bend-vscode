@@ -10,11 +10,11 @@ extension. Nothing else to install.
 Search for **Bend 2** in the extensions view, or:
 
 ```sh
-code --install-extension kbrianps.bend
+code --install-extension kbrianps.bend2
 ```
 
-It is on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kbrianps.bend)
-and on [Open VSX](https://open-vsx.org/extension/kbrianps/bend) (VSCodium,
+It is on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kbrianps.bend2)
+and on [Open VSX](https://open-vsx.org/extension/kbrianps/bend2) (VSCodium,
 Cursor and friends). Each [release](https://github.com/kbrianps/bend-vscode/releases/latest)
 also carries the `.vsix`.
 
@@ -53,7 +53,7 @@ also carries the `.vsix`.
 ```sh
 npm ci
 npm test          # the grammar, and the bundled server over stdio
-npm run package   # bend-<version>.vsix
+npm run package   # bend2-<version>.vsix
 ```
 
 ## Releasing
