@@ -2,7 +2,7 @@
   "name": "bend",
   "displayName": "Bend 2",
   "description": "Bend 2 for VS Code: highlighting, live diagnostics, hover and formatting through bend2-lsp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "Apache-2.0",
   "publisher": "kbrianps",
   "repository": {
