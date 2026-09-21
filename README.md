@@ -7,12 +7,16 @@ extension. Nothing else to install.
 
 ## Install
 
-- **VSCodium, Cursor and other editors on Open VSX:** search for *Bend 2* in
-  the extensions view, or see it on
-  [open-vsx.org](https://open-vsx.org/extension/kbrianps/bend).
-- **VS Code:** the Marketplace listing is on the way. Until then, grab the
-  `.vsix` from the [latest release](https://github.com/kbrianps/bend-vscode/releases/latest) and run
-  `code --install-extension bend-0.1.0.vsix`.
+Search for **Bend 2** in the extensions view, or:
+
+```sh
+code --install-extension kbrianps.bend
+```
+
+It is on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kbrianps.bend)
+and on [Open VSX](https://open-vsx.org/extension/kbrianps/bend) (VSCodium,
+Cursor and friends). Each [release](https://github.com/kbrianps/bend-vscode/releases/latest)
+also carries the `.vsix`.
 
 ## What you get
 
