@@ -1,15 +1,26 @@
-# A v* tag builds, tests and packages the extension, then publishes the
-# .vsix as that tag's release. Run by hand, it does everything but publish.
+# A v* tag builds, tests and packages the extension, publishes the .vsix
+# as that tag's release, and pushes it to the VS Code Marketplace and to
+# Open VSX when their tokens (VSCE_PAT, OVSX_PAT) are set as secrets. Run
+# by hand, it packages, and publishes to the two registries only if asked.
 name: release
 on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      registries:
+        description: "Publish the current version to the Marketplace and Open VSX"
+        type: boolean
+        default: false
 permissions:
   contents: write
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      PUBLISH: ${{ github.ref_type == 'tag' || inputs.registries }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,11 +39,19 @@ jobs:
           echo "" >> notes.md
           echo "Install: \`code --install-extension bend-$(node -p 'require("./package.json").version').vsix\`" >> notes.md
           cat notes.md
-      - name: Publish
+      - name: GitHub release
         if: github.ref_type == 'tag'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$GITHUB_REF_NAME" *.vsix --title "$GITHUB_REF_NAME" --notes-file notes.md
+      - name: VS Code Marketplace
+        if: env.PUBLISH == 'true' && env.VSCE_PAT != ''
+        run: npx vsce publish --packagePath *.vsix
+      - name: Open VSX
+        if: env.PUBLISH == 'true' && env.OVSX_PAT != ''
+        run: |
+          npx --yes ovsx create-namespace kbrianps || true
+          npx --yes ovsx publish *.vsix
       - uses: actions/upload-artifact@v4
         with:
           name: vsix
