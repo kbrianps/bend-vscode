@@ -74,7 +74,7 @@
     "vscode:prepublish": "npm run build"
   },
   "dependencies": {
-    "bend2-lsp": "^0.1.0",
+    "bend2-lsp": "^0.1.1",
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
